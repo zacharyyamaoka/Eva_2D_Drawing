@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Eva 2D Drawing Quick Start &mdash; Eva_2D_Drawing V1 documentation</title>
+  <title>Quick Start &mdash; Eva_2D_Drawing V1 documentation</title>
   
 
   
@@ -81,7 +81,11 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Eva 2D Drawing Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -127,7 +131,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Eva 2D Drawing Quick Start</li>
+      <li>Quick Start</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -146,9 +150,117 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="eva-2d-drawing-quick-start">
-<h1>Eva 2D Drawing Quick Start<a class="headerlink" href="#eva-2d-drawing-quick-start" title="Permalink to this headline">¶</a></h1>
-<p>This Robotics project took place at the Dyson School of Engineering at the start of 2019.</p>
+  <div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<p>Short guide on how to program EVA via drawing to follow 2D tool path.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/zacharyyamaoka/Eva_2D_Drawing">Drawing Code</a></p>
+<p>Download as zip from GitHub. Put in desired location (Desktop, Documents, ect)</p>
+<p><a class="reference external" href="https://www.autodesk.com/campaigns/fusion-360-for-hobbyists">Fusion 360</a></p>
+<p>Free download on Autodesk site. Sign up for a new account then follow the instructions.</p>
+<p><a class="reference external" href="https://github.com/automata-tech/eva_python_sdk">Eva Python SDK</a></p>
+<p>To install write the following in from your computers terminal (mac + linux):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipenv</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">automata</span><span class="o">-</span><span class="n">tech</span><span class="o">/</span><span class="n">eva_python_sdk</span><span class="o">.</span><span class="n">git</span><span class="nd">@master</span><span class="c1">#egg=automata</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>1. Take a photo of the desired tool-path. Typically, the further away you are the
+less perspective distortion there will be. At the same time, make sure the important
+features of the path are captured with sufficient resolution.</p>
+<div class="figure align-center">
+<img alt="_images/aston_raw.jpg" src="_images/aston_raw.jpg" />
+</div>
+<p>2. Open Fusion 360, Start a new design, import the photo onto the top plane. Ensure that
+the axis are pointing in same direction as in the photo. With the current axis orientation,
+forward, left and right in Fusion corresponds the same directions in real life.</p>
+<div class="figure align-center">
+<img alt="_images/aston_fusion.jpg" src="_images/aston_fusion.jpg" />
+</div>
+<ol class="arabic simple" start="3">
+<li>Centre starting waypoint on the tool-path at the origin.</li>
+</ol>
+<div class="figure align-center">
+<img alt="_images/center.jpg" src="_images/center.jpg" />
+</div>
+<p>4. All tool paths must start at the origin, and <strong>cannot loop back</strong>. The path must be
+constructed using only straight lines and only 3 point splines. Ensure there at most
+one sketch in the file at any point.</p>
+<div class="figure align-center">
+<img alt="_images/toolpath_img.jpg" src="_images/toolpath_img.jpg" />
+</div>
+<div class="figure align-center">
+<img alt="_images/path_noimg.jpg" src="_images/path_noimg.jpg" />
+</div>
+<p>5.  Next you will have to run the code to export the drawing information.
+Navigate to the add in button, click on <em>Scripts and Add-Ins</em>.</p>
+<div class="figure align-center">
+<img alt="_images/bar.jpg" src="_images/bar.jpg" />
+</div>
+<p>6. Then click the green plus next to <em>My Scripts</em>. Navigate to where you downloaded
+the <a class="reference external" href="https://github.com/zacharyyamaoka/Eva_2D_Drawing">Drawing Code</a>, select the <em>Fusion 360</em> folder, and click open.</p>
+<div class="figure align-center">
+<img alt="_images/menu2.jpg" src="_images/menu2.jpg" />
+</div>
+<p>7. Select the script <em>EvaDrawPath</em> and click edit. After a brief loading screen,
+the spider editor should open</p>
+<div class="figure align-center">
+<img alt="_images/spider.jpg" src="_images/spider.jpg" />
+</div>
+<p>Edit the line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file_directory</span> <span class="o">=</span> <span class="s2">&quot;/Users/zachyamaoka/Documents/Eva_2D_Drawing&quot;</span>
+</pre></div>
+</div>
+<p>So that it points to the location of the <code class="docutils literal notranslate"><span class="pre">Eva_2D_Drawing</span></code> directory on your computer</p>
+<ol class="arabic simple" start="8">
+<li>Back in Fusion 360, select the <em>EvaDrawPath</em> script and press run!</li>
+</ol>
+<div class="figure align-center">
+<img alt="_images/success.jpg" src="_images/success.jpg" />
+</div>
+<ol class="arabic simple" start="9">
+<li>Connect to EVA over choreograph</li>
+</ol>
+<p>11. Move the end effector to the desired starting position and orientation. When the code is run,
+it will keep this same recorded position but self correct the head orientation to point straight down.</p>
+<p>12. From Choreograph navigate to <em>Dashboard</em>, then <em>Go To</em>, ensure <strong>lock is activated</strong>,
+click <em>Fill Current</em>. Record the joint angles</p>
+<div class="figure align-center">
+<img alt="_images/goto.jpg" src="_images/goto.jpg" />
+</div>
+<ol class="arabic simple" start="13">
+<li>Click on your user profile in the top right, then <em>profile</em>. Record the API key</li>
+</ol>
+<div class="figure align-center">
+<img alt="_images/api.jpg" src="_images/api.jpg" />
+</div>
+<p>14. Using your favourite text editor, open the file <code class="docutils literal notranslate"><span class="pre">calc_tool_path.py</span></code>. Edit code to enter in
+the correct API key, the measured joint angles, and ip adress you used to connect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">host_ip</span> <span class="o">=</span> <span class="s2">&quot;http://172.16.16.2&quot;</span> <span class="c1"># Ip you used to connect to choreograph</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;cec3d52b-ad0c-4caf-8624-95f09381fce9&quot;</span> <span class="c1"># API Tokens</span>
+<span class="n">start_joints_deg</span> <span class="o">=</span> <span class="p">[</span><span class="mf">8.58</span><span class="p">,</span><span class="o">-</span><span class="mf">21.02</span><span class="p">,</span><span class="o">-</span><span class="mf">131.61</span><span class="p">,</span><span class="mf">5.03</span><span class="p">,</span><span class="o">-</span><span class="mf">27.68</span><span class="p">,</span><span class="o">-</span><span class="mf">91.19</span><span class="p">]</span> <span class="c1"># Read from Go-to on choreograph</span>
+</pre></div>
+</div>
+<p>The code will use the joint positions to locate the Fusion 360 origin, and your
+drawing in real space.</p>
+<ol class="arabic" start="15">
+<li><p class="first">Make sure the <strong>lock is off</strong> in choreograph. From terminal activate the virtual pipenv:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipenv</span> <span class="n">shell</span>
+</pre></div>
+</div>
+<p>If your getting errors, like <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'automata'</span></code>,
+it is because the environment has not been activated. Once activated, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into Eva_2D_Drawing Directory,
+Place the e-stop next to you, then:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">calc_tool_path</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">contact &#64; <a class="reference external" href="mailto:zach&#46;yamaoka&#37;&#52;&#48;gmail&#46;com">zach<span>&#46;</span>yamaoka<span>&#64;</span>gmail<span>&#46;</span>com</a> if you have questions!</p>
+</li>
+</ol>
+</div>
 </div>
 
 

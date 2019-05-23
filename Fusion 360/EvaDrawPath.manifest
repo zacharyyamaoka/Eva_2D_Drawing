@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"script",
+	"author":	"",
+	"description":	{
+		"":	"Script to Draw Tool Path"
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}

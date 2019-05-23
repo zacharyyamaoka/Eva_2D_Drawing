@@ -8,15 +8,16 @@ import math
 
 # Ensure Eva is Connected to Computer
 
-host_ip = "http://172.16.16.2"
-token = "cec3d52b-ad0c-4caf-8624-95f09381fce9"
-file_path = "/Users/zachyamaoka/Desktop/test_file.txt"
-eva = Eva(host_ip, token)
+host_ip = "http://172.16.16.2" # Ip you used to connect to choreograph
+token = "cec3d52b-ad0c-4caf-8624-95f09381fce9" # API Tokens
+start_joints_deg = [8.58,-21.02,-131.61,5.03,-27.68,-91.19] # Read from Go-to on choreograph
 
 #----------------------------------------------
 
+file_path = "./path.txt"
+eva = Eva(host_ip, token)
+
 # Enter Starting Joint Angles. Read off of dashboard in choreograph
-start_joints_deg = [8.58,-21.02,-131.61,5.03,-27.68,-91.19]
 
 # Convert joint angles from deg to rad
 start_joints_rad = []
@@ -40,7 +41,7 @@ updated_start_joints = eva.calc_inverse_kinematics(start_joints_rad, start_end_e
 
 #load drawn points from Fusion 360
 points, motion_type = load(file_path)
-
+print(points)
 #Functions to turn points to toolpath
 parsed_points = parse_fusion_points(points)
 waypoints = points_to_waypoints(parsed_points,start_end_eff,updated_start_joints, eva)
