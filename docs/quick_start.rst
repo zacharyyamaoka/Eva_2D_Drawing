@@ -23,7 +23,7 @@ Free download on Autodesk site. Sign up for a new account then follow the instru
 
 `Eva Python SDK`_
 
-To install write the following in from your computers terminal (mac + linux)::
+**Important**, ``cd`` into the `Drawing Code`_ directory. Now to install, execute the following from your computer's terminal (mac + linux)::
 
    pipenv install git+https://github.com/automata-tech/eva_python_sdk.git@master#egg=automata
 
@@ -43,21 +43,26 @@ features of the path are captured with sufficient resolution.
    :align:   center
 
 
-2. Open Fusion 360, Start a new design, import the photo onto the top plane. Ensure that
-the axis are pointing in same direction as in the photo. With the current axis orientation,
-forward, left and right in Fusion corresponds the same directions in real life.
+2. Open Fusion 360, Start a new design, import the photo onto the top plane (ensure photo was in landscape otherwise
+fusion will distort it). Ensure that the axis are pointing in same direction as
+in the photo. With the current axis orientation,
+forward, left and right in Fusion corresponds the same directions relative to EVA in real life.
 
 .. figure::  imgs/aston_fusion.jpg
    :align:   center
 
-3. Centre starting waypoint on the tool-path at the origin.
+3. Calibrate photo size in fusion and then center the intended starting point on the image
+at the fusion 360 origin (location where 3 axis intersect).
 
 .. figure::  imgs/center.jpg
    :align:   center
 
 4. All tool paths must start at the origin, and **cannot loop back**. The path must be
-constructed using only straight lines and only 3 point splines. Ensure there at most
-one sketch in the file at any point.
+constructed using only straight *lines* and only 3 point *fit point spline's*. Ensure there is
+at most one sketch in the file at any point.
+
+The lines will be converted to *linear* movement and the splines to *pass-through* points
+in choreograph.
 
 .. figure::  imgs/toolpath_img.jpg
     :align:   center
@@ -127,8 +132,15 @@ drawing in real space.
 
     If your getting errors, like ``ModuleNotFoundError: No module named 'automata'``,
     it is because the environment has not been activated. Once activated, ``cd`` into Eva_2D_Drawing Directory,
-    Place the e-stop next to you, then::
+    Place the e-stop next to you, then again from within the directory::
 
       python calc_tool_path.py
 
-16. contact @ zach.yamaoka@gmail.com if you have questions!
+16. It is unlikely that the robot will execute the path perfectly to begin with.
+
+* If not going far enough, recalibrate image size in Fusion 360 and adjust drawing
+* If going far enough but at wrong angle, adjust orientation of image in Fusion
+  360 and then adjust drawing.
+* **Remember to run Fusion 360 script again** to export the new path data.
+
+17. contact @ zach.yamaoka@gmail.com if you have questions!

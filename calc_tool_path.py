@@ -10,7 +10,7 @@ import math
 
 host_ip = "http://172.16.16.2" # Ip you used to connect to choreograph
 token = "cec3d52b-ad0c-4caf-8624-95f09381fce9" # API Tokens
-start_joints_deg = [8.58,-21.02,-131.61,5.03,-27.68,-91.19] # Read from Go-to on choreograph
+start_joints_deg = [17.55,6.55,-129.82,4,-55.16,-108.37] # Read from Go-to on choreograph
 
 #----------------------------------------------
 

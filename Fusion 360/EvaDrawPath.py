@@ -4,10 +4,6 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
 import os.path
 
-
-file_directory = '/Users/zachyamaoka/Desktop'
-file_name = "tool_path.txt"
-
 app = adsk.core.Application.get()
 ui = app.userInterface
 
@@ -20,15 +16,17 @@ rootComp = design.rootComponent
 sketches = rootComp.sketches;
 currSketch = sketches.item(0)
 
-
-
-def save(file_directory, filename, info):      
+#--------------------------------------------------------------------
+file_directory = "/Users/zachyamaoka/Documents/Eva_2D_Drawing"
+#--------------------------------------------------------------------
+file_name = "path.txt"
+def save(file_directory, filename, info):
     with open(os.path.join(file_directory,filename), "w") as file1:
         file1.write(info)
-        file1.close() 
-        
+        file1.close()
+
 def round_array(array):
-    
+
     return (round(array[0],6),round(array[1],6),round(array[2],6))
 
 visted = []
@@ -53,10 +51,10 @@ for i in range(num_curves):
     middle = spline_points.item(1).geometry.asArray()
     end2 =spline_points.item(2).geometry.asArray()
     end2 = round_array(end2)
-    
+
     graph[end1] = [[middle],"linear", unique_id]
     unique_id += 1
-    
+
     graph[middle] = [[end2,end1],"spline",unique_id]
     unique_id += 1
 
@@ -71,13 +69,13 @@ for i in range(num_lines):
     geo = curr_line.geometry
     end = round_array(geo.endPoint.asArray())
     start = round_array(geo.startPoint.asArray())
-    
+
     if end in graph: # append neighbor
         graph[end][0].append(start)
     else:
         graph[end] = [[start],"linear", unique_id]
         unique_id += 1
-        
+
     if start in graph: # append neighbor
         graph[start][0].append(end)
     else:
@@ -109,13 +107,15 @@ while len(queue) > 0 : #while not empty
         continue
     else:
         visted.append(curr_id)
-        
+
     #Append Current Point to list
     for cord in curr_point:
         points += str(cord) + ","
     points += curr_point_info[1] + ","
     neighbour = curr_point_info[0]
     queue += neighbour
-    
+
 # Note currently cannot tell difference between left or right
-save(file_directory, file_name, points) 
+save(file_directory, file_name, points)
+
+ui.messageBox('Successful. Saved at: ' + file_directory + '/' + file_name)
