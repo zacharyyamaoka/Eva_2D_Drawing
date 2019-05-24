@@ -10,8 +10,10 @@ import math
 
 host_ip = "http://172.16.16.2" # Ip you used to connect to choreograph
 token = "cec3d52b-ad0c-4caf-8624-95f09381fce9" # API Tokens
-start_joints_deg = [17.55,6.55,-129.82,4,-55.16,-108.37] # Read from Go-to on choreograph
-
+start_joints_deg = [20.4,-60.54,-83.1,5.04,-41.75,3.78] # Read from Go-to on choreograph
+x_offset = -0.0175 + 0.005
+y_offset = 0.005 + 0.04
+z_offset = 0.02  - 0.01 #+ 0.01# raise or lower the end effector to calibrate height - units meters
 #----------------------------------------------
 
 file_path = "./path.txt"
@@ -32,9 +34,14 @@ init_orient_quat = start_end_eff['orientation']
 init_orient_euler = quaternion_to_euler(init_orient_quat['w'],init_orient_quat['x'],init_orient_quat['y'],init_orient_quat['z'])
 
 # Create orientation object that is perpendicular to the floor,
-new_quat = euler_to_quaternion(init_orient_euler[0],init_orient_euler[1],3.14) #yaw, pitch, roll
+# new_quat = euler_to_quaternion(init_orient_euler[0],init_orient_euler[1],3.14) #yaw, pitch, roll
+new_quat = euler_to_quaternion(init_orient_euler[0],0,3.14) #yaw, pitch, roll
+# new_quat = euler_to_quaternion(init_orient_euler[0],0,) #yaw, pitch, roll
+
 start_end_eff['orientation'] = {'w': new_quat[0], 'x': new_quat[1], 'y': new_quat[2], 'z': new_quat[3]}
-start_end_eff['position']['z'] -= 0.01
+start_end_eff['position']['z'] += z_offset
+start_end_eff['position']['y'] += y_offset
+start_end_eff['position']['x'] += x_offset
 
 #find joint angles associate with end effector positon with same, x,y,z, but adjusted orientation.
 updated_start_joints = eva.calc_inverse_kinematics(start_joints_rad, start_end_eff['position'], start_end_eff['orientation'])['ik']['joints']
@@ -56,4 +63,4 @@ with eva.lock():
     eva.control_wait_for_ready()
     eva.toolpaths_use(toolpath)
     eva.control_home()
-    eva.control_run(loop=1)
+    # eva.control_run(loop=1)
