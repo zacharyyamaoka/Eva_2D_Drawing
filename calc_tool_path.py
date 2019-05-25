@@ -63,4 +63,4 @@ with eva.lock():
     eva.control_wait_for_ready()
     eva.toolpaths_use(toolpath)
     eva.control_home()
-    # eva.control_run(loop=1)
+    eva.control_run(loop=1)
