@@ -9,6 +9,8 @@ Short guide on how to program EVA via drawing to follow 2D tool path. Example us
         <iframe src="https://www.youtube.com/embed/RIyTcgUuLos" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
     </div>
 
+|
+
 Prerequisites
 -----------------------------------
 `Drawing Code`_
@@ -124,19 +126,27 @@ the correct API key, the measured joint angles, and ip adress you used to connec
 The code will use the joint positions to locate the Fusion 360 origin, and your
 drawing in real space.
 
-15. Make sure the **lock is off** in choreograph. From terminal activate the virtual pipenv::
+15. Make sure the **lock is off** in choreograph. ``cd`` into the Eva_2D_Drawing directory,
+from terminal activate the virtual pipenv (which should have been installed in this directory)::
 
       pipenv shell
 
-    If your getting errors, like ``ModuleNotFoundError: No module named 'automata'``,
-    it is because the environment has not been activated. Once activated, ``cd`` into Eva_2D_Drawing Directory,
-    Place the e-stop next to you, then again from within the directory::
+If your getting errors, like ``ModuleNotFoundError: No module named 'automata'``,
+it is because the environment has not been activated. Once activated, double check your still
+in the Eva_2D_Drawing Directory, Place the e-stop next to you, then run from terminal::
 
       python calc_tool_path.py
 
 16. It is unlikely that the robot will execute the path perfectly to begin with.
 
 * If not going far enough, recalibrate image size in Fusion 360 and adjust drawing
+* To calibrate image size, use measuring ruler between two known features the image, and then
+  use that distance in real life.
+
+* Tip: make a straight line tool path starting at one feature and ending at the other
+  (of the two features you are measuring). Run the robot. Adjust the length/angle of the line in fusion, until
+  EVA is going to the desired location in real life. Then recalibrate the image in Fusion so it matches.
+
 * If going far enough but at wrong angle, adjust orientation of image in Fusion
   360 and then adjust drawing.
 * **Remember to run Fusion 360 script again** to export the new path data.
